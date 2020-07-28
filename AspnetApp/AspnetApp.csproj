@@ -12,9 +12,5 @@
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Metrics\" />
-  </ItemGroup>
-
 
 </Project>

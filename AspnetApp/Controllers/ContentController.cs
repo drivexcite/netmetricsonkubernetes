@@ -45,10 +45,26 @@ namespace AspnetApp.Controllers
                 _logger.LogWarning($"Missing {hwid}");
                 return NotFound("Hwid is missing");
             }
+            
+            var retrievalDuration = new Random().NextDouble() * 1000;
 
-            _logger.LogInformation($"Retrieved {hwid}");
-
+            _logger.LogInformation($"Retrieved {hwid} in {retrievalDuration}");
             return Ok(new { hwid, type = Hwids[hwid] });
+        }
+
+        [HttpPost]
+        [Route("articles/{hwid}/ratings/{rating}")]
+        public IActionResult RateArticle([FromRoute, NotNull]string hwid, [FromRoute]int rating)
+        {
+            if (!Hwids.ContainsKey(hwid))
+            {
+                _logger.LogWarning($"Missing {hwid}");
+                return NotFound("Hwid is missing");
+            }
+
+            _logger.LogInformation($"Rated content {hwid} as {rating}");
+
+            return Ok();
         }
 
         [HttpPost]

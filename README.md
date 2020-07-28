@@ -57,23 +57,6 @@ The example application is an ASP.NET Core 3.1 application that simulates a Cont
 
 ```csharp
 [HttpGet]
-[Route("articles")]
-public IActionResult GetArticles()
-{
-    var results = (
-        from element in Hwids
-        select new { hwid = element.Key, type = element.Value }
-    ).ToList();
-
-    results.ForEach(document =>
-    {
-        _logger.LogInformation($"Retrieved {document.hwid}");
-    });
-
-    return Ok(results);
-}
-
-[HttpGet]
 [Route("articles/{hwid}")]
 public IActionResult GetArticle([NotNull] string hwid)
 {
@@ -86,39 +69,6 @@ public IActionResult GetArticle([NotNull] string hwid)
     _logger.LogInformation($"Retrieved {hwid}");
 
     return Ok(new { hwid, type = Hwids[hwid] });
-}
-
-[HttpPost]
-[Route("articles")]
-public IActionResult CreateArticle([FromBody]DocumentPost post)
-{
-    var hwid = post.Hwid;
-
-    if (Hwids.ContainsKey(hwid))
-    {
-        return BadRequest($"Already there! {hwid}");
-    }
-
-    Hwids.Add(hwid, DateTime.Now.Ticks % 2 == 0 ? "legacy" : "structured");
-
-    _logger.LogWarning($"Created {hwid}");
-    return new ObjectResult(hwid) { StatusCode = 201 };
-}
-
-[HttpDelete]
-[Route("articles/{hwid}")]
-public IActionResult DeleteArticle([NotNull] string hwid)
-{
-    if (!Hwids.ContainsKey(hwid))
-    {
-        _logger.LogWarning($"Missing {hwid}");
-        return NotFound("Hwid is missing");
-    }
-
-    Hwids.Remove(hwid);
-
-    _logger.LogInformation($"Deleted {hwid}");
-    return Ok(hwid);
 }
 ```
 
@@ -262,10 +212,10 @@ To port forward, execute the following scripts in pairs in separate terminals.
 
 ```pwsh
 $prometheusPod = kubectl get pods -n istio-system | grep prometheus | awk '{print $1}'
-kubectl port-forward $prometheusPod 9090:9090
+kubectl port-forward $prometheusPod -n istio-system 9090:9090
 
 $grafanaPod = kubectl get pods -n istio-system | grep grafana | awk '{print $1}'
-kubectl port-forward $grafanaPod 3000:3000
+kubectl port-forward $grafanaPod -n istio-system 3000:3000
 
 $aspnetappPod = kubectl get pods  | grep aspnetapp | awk '{print $1}'
 kubectl port-forward $aspnetappPod 8080:80

@@ -12,7 +12,7 @@ az group create --name $resourceGroup --location westus
 $principalObject = az ad sp create-for-rbac --skip-assignment | ConvertFrom-Json
 
 # Create cluster
-az aks create --resource-group $resourceGroup --name $clusterName --node-vm-size Standard_B2s --generate-ssh-keys --node-count 2 --service-principal $principalObject.appId --client-secret $principalObject.password
+az aks create --resource-group $resourceGroup --name $clusterName --node-vm-size Standard_B2s --generate-ssh-keys --node-count 3 --service-principal $principalObject.appId --client-secret $principalObject.password
 
 # Create local configuration file to talk to the AKS Cluster
 az aks get-credentials --resource-group $resourceGroup --name $clusterName
@@ -37,14 +37,8 @@ $acrResourceId = az acr show --name $acrName --resource-group $resourceGroup --q
 # Attach ACR to AKS
 az aks update --name $clusterName --resource-group $resourceGroup --attach-acr $acrResourceId
 
-# From the server source code directory, build the image in ACR.
-az acr build --resource-group $resourceGroup --registry $acrName --image server:v1.1 .
-
 # Install Istio
 istioctl install --set profile=demo
 
-# Store the server name
-$acrRoot = az acr show --name $acrName --resource-group $resourceGroup --query loginServer
-
 # From the server source code directory, build the image in ACR.
-az acr build --resource-group $resourceGroup --registry $acrName --image aspnetapp:v1.0 .
+az acr build --resource-group $resourceGroup --registry $acrName --image aspnetapp:v1.0 ./AspnetApp/
