@@ -278,3 +278,11 @@ Go to `http://127.0.0.1:3000/`, and then to got to the side menu (+) -> Create D
 
 In the Query section use `aspnetapp_articles_retrieved_by_type_total{job="kubernetes-service-endpoints"}` in the Metrics field. Then type `[{{type}}] {{hwid}}` in legend.
 Make sure in the Display section, you select Show -> Calculation and Calc -> Last (not null), and give a title to the Panel.
+
+## References
+* [Istio Installation](https://istio.io/latest/docs/setup/getting-started/)
+* [Prometheus-Net](https://github.com/prometheus-net/prometheus-net)
+* [Prometheus Naming Best Practices](https://prometheus.io/docs/practices/naming/)
+* [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+* [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+* [Capture and Visualize Metrics with Prometheus and Grafana](https://docs.particular.net/samples/logging/prometheus-grafana/)
