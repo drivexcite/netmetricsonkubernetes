@@ -224,7 +224,7 @@ kubectl port-forward $aspnetappPod 8080:80
 ## Configuring Grafana
 Go to `http://127.0.0.1:3000/`, and then to got to the side menu (+) -> Create Dashboard.
 
-In the Query section use `aspnetapp_articles_retrieved_by_type_total{job="kubernetes-service-endpoints"}` in the Metrics field. Then type `[{{type}}] {{hwid}}` in legend.
+In the Query section use `aspnetapp_articles_retrieved_by_type_total` in the Metrics field. Then type `[{{type}}] {{hwid}}` in legend.
 Make sure in the Display section, you select Show -> Calculation and Calc -> Last (not null), and give a title to the Panel.
 
 ## References
