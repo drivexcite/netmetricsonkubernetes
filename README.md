@@ -2,6 +2,9 @@
 
 The objective of this exercise is to publish custom metrics from a .NET web application and create a dashboard with them. To achieve this objective, this tuturial uses the Istio service mesh to bootstrap a minimally viable monitoring system comprised of the Web Application itself, a metric scraper provided by Istio, Promnetheus (time series database) and Grafana (a visualization tool).
 
+## Environment
+Open the root folder of this repo in Visual Studio Code and select Open in Remote Container, from the lower left corner. The container contains all the tools to create this example, including Docker CLI, Azure CLI, kubectl, istioctl, Power Shell.
+
 ## Infrastructure
 
 To start this example, the first step is to have the following infrastructure in place:
