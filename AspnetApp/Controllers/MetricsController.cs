@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 
 namespace AspnetApp.Controllers
 {
@@ -10,6 +11,7 @@ namespace AspnetApp.Controllers
     public class MetricsController : ControllerBase
     {
         private static readonly HttpClient HttpClient = new HttpClient();
+        private static readonly Histogram SomeOperationDuration = Metrics.CreateHistogram("some_operation_get_duration", "Some Operation - Histogram of request time to underlying dependency (in ms)");
 
         private readonly ILogger<MetricsController> _logger;
         
@@ -34,6 +36,7 @@ namespace AspnetApp.Controllers
             };
 
             stopwWatch.Stop();
+            SomeOperationDuration.Observe(stopwWatch.ElapsedMilliseconds);
 
             return result;
         }

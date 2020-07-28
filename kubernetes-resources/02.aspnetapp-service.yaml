@@ -5,6 +5,8 @@ metadata:
   labels:
     app: aspnetapp
     service: aspnetapp
+  annotations:
+    prometheus.io/scrape: "true"
 spec:
   ports:
     - port: 80
