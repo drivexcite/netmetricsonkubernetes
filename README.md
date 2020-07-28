@@ -44,11 +44,6 @@ $acrResourceId = az acr show --name $acrName --resource-group $resourceGroup --q
 az aks update --name $clusterName --resource-group $resourceGroup --attach-acr $acrResourceId
 ```
 
-For the Service Mesh installation:
-```pwsh
-istioctl install --set profile=demo
-```
-
 For the Istio Service Mesh
 ```pwsh
 istioctl install --set profile=demo
